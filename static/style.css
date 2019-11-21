@@ -30,7 +30,8 @@ header h2 {
 }
 .upload textarea {
   border: none;
-  box-shadow: 0 0 2px rgb(60, 159, 245) inset;
+  padding: 16px;
+  box-shadow: 0 0 4px rgb(60, 159, 245) inset;
   transition: all 0.3ms;
 }
 .upload button {

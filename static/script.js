@@ -30,6 +30,7 @@ function setSearch(data) {
 
 function display(data, key) {
   $("#result").empty();
+  $("#res").empty();
   if (!data.err) {
     var lis = data.map(
       d =>
