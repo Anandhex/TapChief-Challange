@@ -55,6 +55,7 @@ function pushVal(table, word, documentId) {
 
     return table;
   }
+  ///something changed
 
   table.forEach((doc, idx) => {
     if (doc.word === word) {
