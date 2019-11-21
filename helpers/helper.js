@@ -1,5 +1,6 @@
 const stopwords = [
   "a",
+  "an",
   "and",
   "around",
   "every",
@@ -15,31 +16,40 @@ const stopwords = [
   "to",
   "under"
 ];
+var invertTables = [];
+var invertId = 0;
 
 function containsId(docs, id) {
-  let doc = docs.filter(d => d.id === id)[0];
+  let doc, idx;
+
+  for (let i = 0; i < docs.length; i++) {
+    let d = docs[i];
+    if (d.id === id) {
+      idx = i;
+      doc = d;
+    }
+  }
+
   if (doc) {
     let newdoc = {
       ...doc,
       occurence: doc.occurence + 1
     };
-
-    docs[id] = newdoc;
+    docs[idx] = newdoc;
     return docs;
   } else {
     doc = {
-      id,
+      id: id,
       occurence: 1
     };
     docs.push(doc);
     return docs;
   }
 }
-var invertTables = [];
-var invertId = 0;
+
 function pushVal(table, word, documentId) {
   let flag = 1;
-  
+
   if (table.length === 0) {
     table.push({
       id: invertId,
@@ -52,23 +62,21 @@ function pushVal(table, word, documentId) {
       ]
     });
     invertId++;
-
     return table;
   }
-  ///something changed
 
-  table.forEach((doc, idx) => {
+  for (let i = 0; i < table.length; i++) {
+    let doc = table[i];
     if (doc.word === word) {
       doc = {
         ...doc,
         documentId: containsId(doc.documentId, documentId)
       };
-
-      table.splice(idx, 1, doc);
+      table.splice(i, 1, doc);
       flag = 0;
       break;
     }
-  });
+  }
 
   if (flag) {
     table.push({
@@ -83,48 +91,50 @@ function pushVal(table, word, documentId) {
     });
     invertId++;
   }
+
   return table;
 }
 
-function index() {
+exports.index = function(texts) {
   invertTables = [];
   invertId = 0;
-  var body = document.querySelector("textarea").value;
-  var documents = body.split("\n\n");
-  var doc_objects = documents.map((document, idx) => {
+  texts = texts.replace(/[&#,+()$~%.'":*?<>{}]/g, "").trim();
+
+  var documents = texts
+    .split("\n\n")
+    .map(text => text.trim().replace(/\n/g, " "));
+
+  var doc_objects = documents.map((document, id) => {
     return {
-      id: idx,
+      id,
       words: document
         .split(" ")
         .filter(word => stopwords.indexOf(word.toLowerCase()) === -1)
     };
   });
 
-  doc_objects.forEach((obj, idx) => {
+  doc_objects.forEach(obj => {
     let { words, id } = obj;
 
     words.forEach(word => {
-      pushVal(invertTables, word.toLowerCase().replace(/[^a-zA-Z ]/g, ""), id);
+      pushVal(invertTables, word.toLowerCase(), id);
     });
   });
-}
-
-function search() {
-  var key = document.querySelector("#search").value;
-  let docId = invertTables.filter(doc => {
+  return invertTables;
+};
+exports.search = function(key, invertTables) {
+  let word = invertTables.filter(doc => {
     return doc.word === key;
   })[0];
-  let doc = docId.documentId.sort((a, b) => b.occurence - a.occurence);
-  if (docId.documentId.length > 10) {
-    doc = doc.slice(0, 10);
+  if (word) {
+    let doc = word.documentId.sort((a, b) => b.occurence - a.occurence);
+    if (word.documentId.length > 10) {
+      doc = doc.slice(0, 10);
+    }
+    return doc;
+  } else {
+    return "Word is not present";
   }
-  let val = doc.map(
-    d => `occurrend at document${d.id} at times ${d.occurence}\n`
-  );
-  document.querySelector("#val").innerHTML = val;
-}
+};
 
-function clear() {
-  invertTables = [];
-  invertId = 0;
-}
+module.exports = exports;

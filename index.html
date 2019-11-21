@@ -1,19 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.js"
+      integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/static/style.css" />
     <title>TapChief Challange</title>
   </head>
   <body>
-    <form action="#" onsubmit="index()">
-      <textarea cols="60" rows="30"></textarea>
-      <button type="submit">Click Me!</button>
-    </form>
-    <input type="text" id="search" />
-    <button onclick="search()">Search</button>
-    <p id="val"></p>
-    <script src="script.js"></script>
+    <nav>TapChief Challange</nav>
+    <header><h2>Please enter the text in the given Text box</h2></header>
+    <div class="upload">
+      <textarea cols="10" rows="15"></textarea>
+      <button id="index" type="submit">upload</button>
+      <p id="res"></p>
+    </div>
+    <div class="search-box">
+      <input type="text" id="search" placeholder="Enter the text to search.." />
+      <button id="btn-search">Search</button>
+    </div>
+    <div class="result-box">
+      <div id="result"></div>
+    </div>
+    <script src="/static/script.js"></script>
   </body>
 </html>

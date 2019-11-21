@@ -1,0 +1,98 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+nav {
+  height: 50px;
+  background-color: rgba(33, 83, 190, 0.966);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.3rem;
+  font-variant: small-caps;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+}
+header h2 {
+  color: rgb(60, 159, 245);
+  text-align: center;
+  margin-top: 24px;
+}
+.upload {
+  margin: 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.upload textarea {
+  border: none;
+  box-shadow: 0 0 2px rgb(60, 159, 245) inset;
+  transition: all 0.3ms;
+}
+.upload button {
+  margin-top: 12px;
+  padding: 10px 20px;
+  width: fit-content;
+  align-self: center;
+  border-radius: 10px;
+  background-color: rgba(99, 142, 235, 0.966);
+  border: none;
+  color: white;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  outline: none;
+}
+.upload button:hover {
+  background-color: rgba(33, 83, 190, 0.966);
+  font-style: bold;
+}
+.upload p {
+  align-self: flex-end;
+  color: rgb(60, 159, 245);
+  font-style: bold;
+  font-size: 1.2rem;
+}
+
+.search-box {
+  display: flex;
+  justify-content: center;
+  height: 36px;
+}
+
+.search-box input {
+  width: 300px;
+  text-align: center;
+  border: none;
+  box-shadow: 0 0 3px rgba(33, 83, 190, 0.966) inset;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.search-box button {
+  padding: 0 10px;
+  background-color: rgba(99, 142, 235, 0.966);
+  color: white;
+  text-transform: uppercase;
+  border: none;
+  transition: all 0.3ms;
+}
+.search-box button:hover {
+  background-color: rgba(33, 83, 190, 0.966);
+  font-style: bold;
+}
+
+#result {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  line-height: 2em;
+  font-size: 0.9em;
+}
+
+#result li {
+  list-style: none;
+}
