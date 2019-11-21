@@ -33,4 +33,4 @@ app.post("/api/search/", (req, res) => {
   res.send({ err: "Something went wrong!" });
 });
 
-app.listen(8000, () => {});
+app.listen(process.env.PORT || 4000, () => {});
