@@ -20,6 +20,7 @@ $("#btn-clear").on("click", () => {
 });
 
 function setSearch(data) {
+  $("#result").empty();
   if (data.success === "cleared") {
     invertTables = data.invertTable;
     $("#res").empty();
