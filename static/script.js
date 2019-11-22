@@ -23,6 +23,7 @@ function setSearch(data) {
   if (data.success === "cleared") {
     invertTables = data.invertTable;
     $("#res").empty();
+    $("#result").empty();
     $("#res").append("<span>Data removed<span>");
     $("textarea").val("");
   }
