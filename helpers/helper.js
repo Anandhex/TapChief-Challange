@@ -19,9 +19,11 @@ const stopwords = [
 var invertTables = [];
 var invertId = 0;
 
+//for checking whether the word is already present in the document and updating accordingly
+
 function containsId(docs, id) {
   let doc, idx;
-
+  // checking for the document
   for (let i = 0; i < docs.length; i++) {
     let d = docs[i];
     if (d.id === id) {
@@ -47,9 +49,10 @@ function containsId(docs, id) {
   }
 }
 
+// adding the value to the inverted table
 function pushVal(table, word, documentId) {
   let flag = 1;
-
+  // checking if empty
   if (table.length === 0) {
     table.push({
       id: invertId,
@@ -64,20 +67,20 @@ function pushVal(table, word, documentId) {
     invertId++;
     return table;
   }
-
+  // checking if the word is present in the table
   for (let i = 0; i < table.length; i++) {
     let doc = table[i];
     if (doc.word === word) {
       doc = {
         ...doc,
-        documentId: containsId(doc.documentId, documentId)
+        documentId: containsId(doc.documentId, documentId) //updating the documentID
       };
-      table.splice(i, 1, doc);
+      table.splice(i, 1, doc); //updating the table
       flag = 0;
       break;
     }
   }
-
+  // if the word is not found
   if (flag) {
     table.push({
       id: invertId,
@@ -95,15 +98,16 @@ function pushVal(table, word, documentId) {
   return table;
 }
 
-exports.index = function(texts) {
-  invertTables = [];
-  invertId = 0;
-  texts = texts.replace(/[&#,+()$~%.'":*?<>{}]/g, "").trim();
+function preprosing(texts) {
+  // removing any special characters other than newline character
+  texts.replace(/[&#,+()$~%.'":*?<>{}]/g, "").trim();
 
+  //  splitting the document
   var documents = texts
     .split("\n\n")
-    .map(text => text.trim().replace(/\n/g, " "));
+    .map(text => text.trim().replace(/\n/g, " ")); //replacing carige return with empty space
 
+  // removing from the document if it contains stop words
   var doc_objects = documents.map((document, id) => {
     return {
       id,
@@ -112,7 +116,17 @@ exports.index = function(texts) {
         .filter(word => stopwords.indexOf(word.toLowerCase()) === -1)
     };
   });
+  return doc_objects;
+}
 
+exports.index = function(texts) {
+  invertTables = [];
+  invertId = 0;
+
+  // preprocessing
+  let doc_objects = preprosing(texts);
+
+  // building up the invertTable
   doc_objects.forEach(obj => {
     let { words, id } = obj;
 
@@ -123,6 +137,13 @@ exports.index = function(texts) {
   return invertTables;
 };
 exports.search = function(key, invertTables) {
+  // converting user input to lowercase and removing any special characters
+  key = key
+    .replace(/[&#,+()$~%.'":*?<>{}]/g, "")
+    .replace(/\n/g, " ")
+    .toLowerCase();
+
+  // searching for the word
   let word = invertTables.filter(doc => {
     return doc.word === key;
   })[0];
@@ -133,7 +154,7 @@ exports.search = function(key, invertTables) {
     }
     return doc;
   } else {
-    return "Word is not present";
+    return { err: "word is not present" }; //if the word not found
   }
 };
 

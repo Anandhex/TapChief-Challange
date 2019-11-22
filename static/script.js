@@ -15,13 +15,22 @@ $("#btn-search").on("click", () => {
     display(data, key)
   );
 });
+$("#btn-clear").on("click", () => {
+  $.get("/api/clear").then(data => setSearch(data));
+});
 
 function setSearch(data) {
-  if (!data.err) {
+  if (data.success === "cleared") {
+    invertTables = data.invertTable;
+    $("#res").empty();
+    $("#res").append("<span>Data removed<span>");
+  }
+  if (!data.err && !data.success) {
     $("#res").empty();
     $("#res").append("<span>Data succesfully uploaded<span>");
     invertTables = data;
-  } else {
+  }
+  if (data.err) {
     invertTables = [];
     $("#res").empty();
     $("#res").append(`<span style="color:red">No data to upload<span>`);
@@ -31,15 +40,18 @@ function setSearch(data) {
 function display(data, key) {
   $("#result").empty();
   $("#res").empty();
-  if (!data.err) {
+
+  if (!data.err && !data.dataMissing) {
     var lis = data.map(
       d =>
         `<li>Has occured ${d.occurence} times in the paragraph ${Number(d.id) +
           1}</li>`
     );
     $("#result").append(`<h2>The word: ${key}</h2>`);
+  } else if (data.dataMissing) {
+    lis = `<h3 style="color:red">${data.dataMissing}</h3>`;
   } else {
-    lis = data.err;
+    lis = `<h3 style="color:red">${key} the ${data.err}</h3>`;
   }
 
   $("#result").append(lis);

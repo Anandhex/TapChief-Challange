@@ -47,9 +47,22 @@ header h2 {
   transition: all 0.3s;
   outline: none;
 }
-.upload button:hover {
+
+.upload #index:hover {
   background-color: rgba(33, 83, 190, 0.966);
   font-style: bold;
+}
+
+.upload #btn-clear {
+  background-color: rgb(248, 103, 103);
+  margin-left: 12px;
+}
+.upload #btn-clear:hover {
+  background-color: red;
+}
+.upload div {
+  display: flex;
+  justify-content: center;
 }
 .upload p {
   align-self: flex-end;
@@ -96,4 +109,8 @@ header h2 {
 
 #result li {
   list-style: none;
+}
+.instruction p {
+  font-weight: bold;
+  font-size: 1.2em;
 }

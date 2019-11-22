@@ -8,17 +8,25 @@
     ></script>
     <link
       rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     />
     <link rel="stylesheet" href="/static/style.css" />
-    <title>TapChief Challange</title>
+    <title>TapSearch</title>
   </head>
   <body>
-    <nav>TapChief Challange</nav>
-    <header><h2>Please enter the text in the given Text box</h2></header>
+    <nav>TapSearch</nav>
+
+    <header>
+      <h2>Please enter the text in the given Text box</h2>
+    </header>
+
     <div class="upload">
       <textarea cols="10" rows="15"></textarea>
-      <button id="index" type="submit">upload</button>
+      <div>
+        <button id="index" type="submit">upload</button>
+
+        <button id="btn-clear">Clear</button>
+      </div>
       <p id="res"></p>
     </div>
     <div class="search-box">
@@ -26,7 +34,21 @@
       <button id="btn-search">Search</button>
     </div>
     <div class="result-box">
-      <div id="result"></div>
+      <div id="result">
+        <div class="instruction">
+          <p>How to use it?</p>
+          <ol>
+            <li>Enter the text to be indexed</li>
+            <li>Click on the upload button</li>
+            <li>Enter the text which has to be searched</li>
+            <li>Click on the search button for the result</li>
+          </ol>
+          <p>
+            Things to keep in mind. Paragraph is seperated by two Newline/Enter
+            characters
+          </p>
+        </div>
+      </div>
     </div>
     <script src="/static/script.js"></script>
   </body>
