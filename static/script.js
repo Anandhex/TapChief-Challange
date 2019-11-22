@@ -24,6 +24,7 @@ function setSearch(data) {
     invertTables = data.invertTable;
     $("#res").empty();
     $("#res").append("<span>Data removed<span>");
+    $("textarea").val("");
   }
   if (!data.err && !data.success) {
     $("#res").empty();
@@ -40,7 +41,7 @@ function setSearch(data) {
 function display(data, key) {
   $("#result").empty();
   $("#res").empty();
-
+  $("#search").val("");
   if (!data.err && !data.dataMissing) {
     var lis = data.map(
       d =>

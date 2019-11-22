@@ -137,10 +137,11 @@ exports.index = function(texts) {
   return invertTables;
 };
 exports.search = function(key, invertTables) {
-  // converting user input to lowercase and removing any special characters
+  // converting user input to lowercase and removing any special characters and converting empty spaces to "" 
   key = key
     .replace(/[&#,+()$~%.'":*?<>{}]/g, "")
     .replace(/\n/g, " ")
+    .replace(" ", "")
     .toLowerCase();
 
   // searching for the word
