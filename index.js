@@ -37,7 +37,7 @@ app.post("/api/search/", (req, res) => {
   if (!req.body.invertTable) {
     res.send({ dataMissing: "Please upload the data" });
   } else if (!req.body.key) {
-    res.send({ dataMissing: "Please upload the word" });
+    res.send({ dataMissing: "Please enter the word" });
   } else res.send({ err: "Something went wrong!" });
 });
 
