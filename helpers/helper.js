@@ -84,7 +84,7 @@ function pushVal(table, word, documentId) {
 
 function preprosing(texts) {
   // removing any special characters other than newline character
-  texts.replace(/[&#,+()$~%.":*?<>{}]/g, "").trim();
+  texts = texts.replace(/[^a-zA-z\s]/g, "");
 
   //  splitting the document
   var documents = texts
@@ -97,9 +97,10 @@ function preprosing(texts) {
       id,
       words: document
         .split(" ")
-        .filter(word => stopwords.indexOf(word.toLowerCase()) === -1)
+        .filter(word => !stopwords.includes(word.toLowerCase()))
     };
   });
+
   return doc_objects;
 }
 
