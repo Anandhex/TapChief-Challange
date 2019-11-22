@@ -33,8 +33,11 @@ app.post("/api/search/", (req, res) => {
     var doc = helpers.search(req.body.key, req.body.invertTable);
     res.send(doc);
   }
+
   if (!req.body.invertTable) {
     res.send({ dataMissing: "Please upload the data" });
+  } else if (!req.body.key) {
+    res.send({ dataMissing: "Please upload the word" });
   } else res.send({ err: "Something went wrong!" });
 });
 
