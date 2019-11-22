@@ -23,4 +23,5 @@ Instructions to use TapSearch
       List of stopwords is present in this webpage https://www.ranks.nl/stopwords
     
     3. Result is returened in the order of most occurence. Top documents are the documents with higher number of word occurence.
-       If the words have occurred in different documents i.e, more than 10 documents contain the word.Then only the list with top 10     documents will be reterived.
+       If the words have occurred in different documents i.e, more than 10 documents contain the word.
+       Then only the list with top 10 documents will be reterived.
