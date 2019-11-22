@@ -1,21 +1,5 @@
-const stopwords = [
-  "a",
-  "an",
-  "and",
-  "around",
-  "every",
-  "for",
-  "from",
-  "in",
-  "is",
-  "it",
-  "not",
-  "on",
-  "one",
-  "the",
-  "to",
-  "under"
-];
+var stopwords = require("./stopwords");
+
 var invertTables = [];
 var invertId = 0;
 
@@ -100,7 +84,7 @@ function pushVal(table, word, documentId) {
 
 function preprosing(texts) {
   // removing any special characters other than newline character
-  texts.replace(/[&#,+()$~%.'":*?<>{}]/g, "").trim();
+  texts.replace(/[&#,+()$~%.":*?<>{}]/g, "").trim();
 
   //  splitting the document
   var documents = texts
@@ -134,16 +118,21 @@ exports.index = function(texts) {
       pushVal(invertTables, word.toLowerCase(), id);
     });
   });
+  if (invertTables.length == 0) {
+    return { err: "conatins only stopping words" };
+  }
   return invertTables;
 };
 exports.search = function(key, invertTables) {
-  // converting user input to lowercase and removing any special characters and converting empty spaces to "" 
+  // converting user input to lowercase and removing any special characters and converting empty spaces to ""
   key = key
-    .replace(/[&#,+()$~%.'":*?<>{}]/g, "")
+    .replace(/[&#,+()$~%.":*?<>{}]/g, "")
     .replace(/\n/g, " ")
     .replace(" ", "")
     .toLowerCase();
-
+  if (stopwords.includes(key)) {
+    return { err: "stopping word not allowed" };
+  }
   // searching for the word
   let word = invertTables.filter(doc => {
     return doc.word === key;

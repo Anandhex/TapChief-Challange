@@ -23,8 +23,9 @@ app.post("/api/index/", (req, res) => {
   if (req.body.document) {
     var table = helpers.index(req.body.document);
     res.send(table);
+  } else {
+    res.send({ err: "Something went wrong!" });
   }
-  res.send({ err: "Something went wrong!" });
 });
 
 // For searching for a word in the document
@@ -32,13 +33,13 @@ app.post("/api/search/", (req, res) => {
   if (req.body.key !== "" && req.body.invertTable) {
     var doc = helpers.search(req.body.key, req.body.invertTable);
     res.send(doc);
+  } else {
+    if (!req.body.invertTable) {
+      res.send({ dataMissing: "Please upload the data" });
+    } else if (!req.body.key) {
+      res.send({ dataMissing: "Please enter the word" });
+    } else res.send({ err: "Something went wrong!" });
   }
-
-  if (!req.body.invertTable) {
-    res.send({ dataMissing: "Please upload the data" });
-  } else if (!req.body.key) {
-    res.send({ dataMissing: "Please enter the word" });
-  } else res.send({ err: "Something went wrong!" });
 });
 
 // clearing the index

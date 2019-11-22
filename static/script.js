@@ -26,16 +26,14 @@ function setSearch(data) {
     $("#result").empty();
     $("#res").append("<span>Data removed<span>");
     $("textarea").val("");
-  }
-  if (!data.err && !data.success) {
+  } else if (!data.err && !data.success) {
     $("#res").empty();
     $("#res").append("<span>Data succesfully uploaded<span>");
     invertTables = data;
-  }
-  if (data.err) {
+  } else if (data.err || data.invertTable === []) {
     invertTables = [];
     $("#res").empty();
-    $("#res").append(`<span style="color:red">No data to upload<span>`);
+    $("#res").append(`<span style="color:red">${data.err}<span>`);
   }
 }
 
@@ -53,7 +51,7 @@ function display(data, key) {
   } else if (data.dataMissing) {
     lis = `<h3 style="color:red">${data.dataMissing}</h3>`;
   } else {
-    lis = `<h3 style="color:red">${key} the ${data.err}</h3>`;
+    lis = `<h3 style="color:red">${key} ${data.err}</h3>`;
   }
 
   $("#result").append(lis);
